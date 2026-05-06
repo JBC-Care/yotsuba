@@ -2,34 +2,703 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ばすてる四葉 | JBC-Care デイサービス</title>
-  <meta name="description" content="JBC株式会社が運営する地域密着型通所介護施設のランディングページです。 | 項目 | 内容 |">
-  <meta name="keywords" content="ばすてる四葉, 四葉, デイサービス, 通所介護, 介護サービス, JBC-Care">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ぱすてるデイサービス四葉｜板橋区四葉・地域密着型通所介護</title>
+  <meta name="description" content="板橋区四葉にある少人数制デイサービス。10名定員で一人ひとりに寄り添うケアをご提供。ご家族・ケアマネ様はお電話またはFAXでお気軽にご相談ください。">
+  <meta name="keywords" content="デイサービス,デイサービス,板橋区,四葉,通所介護,介護,少人数,ぱすてる,四葉">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="ばすてる四葉 | JBC-Care デイサービス">
-  <meta property="og:description" content="JBC株式会社が運営する地域密着型通所介護施設のランディングページです。 | 項目 | 内容 |">
+  <link rel="canonical" href="https://jbc-care.github.io/yotsuha/">
+
+  <meta property="og:title" content="ぱすてるデイサービス四葉｜板橋区四葉・地域密着型通所介護">
+  <meta property="og:description" content="板橋区四葉にある少人数制デイサービス。10名定員で一人ひとりに寄り添うケアをご提供。">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jbc-care.github.io/yotsuba/">
+  <meta property="og:url" content="https://jbc-care.github.io/yotsuha/">
   <meta property="og:locale" content="ja_JP">
-  <link rel="canonical" href="https://jbc-care.github.io/yotsuba/">
+  <meta property="og:site_name" content="ぱすてるデイサービス四葉">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "ばすてる四葉",
-    "description": "JBC株式会社が運営する地域密着型通所介護施設のランディングページです。 | 項目 | 内容 |",
-    "url": "https://jbc-care.github.io/yotsuba/",
-    "parentOrganization": {
-      "@type": "Organization",
-      "name": "JBC-Care",
-      "url": "https://jbc-care.github.io/jbc-sites/"
-    }
+    "name": "ぱすてるデイサービス四葉",
+    "description": "板橋区四葉にある少人数制デイサービス。10名定員で一人ひとりに寄り添うケアをご提供。",
+    "url": "https://jbc-care.github.io/yotsuha/",
+    "telephone": "03-6904-2145",
+    "faxNumber": "03-6904-2146",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "四葉2-15-1 1階",
+      "addressLocality": "板橋区",
+      "addressRegion": "東京都",
+      "postalCode": "175-0084",
+      "addressCountry": "JP"
+    },
+    "openingHours": "Mo,Tu,We,Th,Fr,Sa,Su 08:00-17:00",
+    "priceRange": "¥"
   }
   </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #E67A30;
+      --peach: #FFDAC1;
+      --pink: #FFB7B2;
+      --green: #06C755;
+      --bg: #FFF9F5;
+      --text: #4A4A4A;
+      --white: #fff;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .swipe-wrap {
+      height: 100dvh;
+      width: 100vw;
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .swipe-wrap::-webkit-scrollbar { display: none; }
+
+    .page {
+      height: 100dvh;
+      min-width: 100vw;
+      width: 100vw;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dots {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--peach);
+      border: 1.5px solid var(--orange);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .dot.active {
+      background: var(--orange);
+      transform: scale(1.3);
+    }
+
+    .swipe-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.85;
+      animation: bounceX 1.8s infinite;
+    }
+    .swipe-hint span { font-size: 1.4rem; color: #1a1a1a; font-weight: 700; }
+    @keyframes bounceX {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .tag.green { background: var(--green); }
+    .tag.orange { background: var(--orange); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn:active { opacity: 0.85; transform: scale(0.97); }
+    .btn-line { background: var(--green); color: #fff; }
+    .btn-tel { background: #fff; color: var(--orange); border: 2px solid var(--peach); }
+    .btn-orange { background: var(--orange); color: #fff; }
+
+    /* PAGE 1 */
+    #page1 {
+      background: linear-gradient(160deg, #FFF9F5 0%, #FFDAC1 100%);
+    }
+    .hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+    }
+    .logo-text {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1.3;
+    }
+    .header-tel {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--orange);
+      text-decoration: none;
+      background: #fff;
+      border: 2px solid var(--peach);
+      padding: 6px 12px;
+      border-radius: 50px;
+    }
+    .hero-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px 0;
+      overflow: hidden;
+    }
+    .hero-image {
+      width: 100%;
+      flex: 1;
+      object-fit: cover;
+      border-radius: 20px 20px 0 0;
+      margin-top: 16px;
+      max-height: 45vh;
+    }
+    .hero-content {
+      padding: 0 0 16px;
+    }
+    .hero-content h1 {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      font-weight: 900;
+      line-height: 1.35;
+      margin: 12px 0 8px;
+      color: var(--text);
+    }
+    .hero-content h1 em { color: var(--orange); font-style: normal; }
+    .hero-content p {
+      font-size: 0.82rem;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .hero-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .hero-btns .btn { font-size: 0.88rem; padding: 12px 16px; }
+
+    /* PAGE 2 */
+    #page2 { background: var(--white); }
+    .page-inner {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 24px 80px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page-inner::-webkit-scrollbar { display: none; }
+    .page-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.4;
+      margin: 12px 0 24px;
+    }
+    .reason-card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      border-left: 4px solid var(--orange);
+    }
+    .reason-num {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--peach);
+      line-height: 1;
+      min-width: 36px;
+    }
+    .reason-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .reason-card p { font-size: 0.8rem; color: #777; line-height: 1.6; }
+    .price-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px;
+      border: 2px solid var(--peach);
+    }
+    .price-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-main {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .price-main small { font-size: 0.85rem; color: #999; font-weight: 400; margin-left: 4px; }
+    .price-note { font-size: 0.75rem; color: #999; margin-top: 6px; }
+    .meal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.88rem;
+    }
+    .meal-row:last-child { border-bottom: none; }
+    .meal-row strong { color: var(--orange); font-weight: 700; }
+
+    /* PAGE 3 */
+    #page3 { background: var(--bg); }
+    .faq-item {
+      background: #fff;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      border: 1px solid var(--peach);
+      overflow: hidden;
+    }
+    .faq-q {
+      padding: 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-q-text { display: flex; gap: 10px; align-items: flex-start; }
+    .faq-q-icon {
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .faq-chevron {
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      color: #ccc;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+      font-size: 0.82rem;
+      color: #666;
+      line-height: 1.7;
+      padding: 0 16px;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 16px 16px;
+    }
+
+    /* PAGE 4 */
+    #page4 { background: var(--white); }
+    .map-wrap {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--peach);
+      margin-bottom: 16px;
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 220px;
+      display: block;
+      border: none;
+    }
+    .access-info dt {
+      font-size: 0.72rem;
+      color: #999;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .access-info dd {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .access-info dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; }
+    .access-info dl dt { margin-top: 0; }
+    .contact-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px;
+      border: 2px solid var(--peach);
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: opacity 0.2s;
+    }
+    .contact-card:active { opacity: 0.8; }
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-card .label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+    .contact-card h4 { font-size: 1rem; font-weight: 700; }
+    .contact-card p { font-size: 0.75rem; color: #999; margin-top: 2px; }
+    .fax-card .contact-icon { background: var(--bg); }
+    .tel-card .contact-icon { background: #FFF0EB; }
+    .fax-card .label { background: var(--bg); color: var(--orange); }
+    .tel-card .label { background: #FFF0EB; color: var(--orange); }
+    .copyright {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #bbb;
+      margin-top: 16px;
+    }
+
+    @keyframes goldFade {
+      0%, 100% { color: var(--text); text-shadow: none; }
+      50% { color: #C9A84C; text-shadow: 0 0 12px rgba(201,168,76,0.5); }
+    }
+    .gold-blink { animation: goldFade 2.4s ease-in-out infinite; }
+
+    @keyframes pastelFade {
+      0%   { color: #F2B48A; text-shadow: 0 0 8px rgba(242,180,138,0.3); }
+      25%  { color: #EFA0BB; text-shadow: 0 0 8px rgba(239,160,187,0.3); }
+      50%  { color: #9ED4B0; text-shadow: 0 0 8px rgba(158,212,176,0.3); }
+      75%  { color: #F7C8D4; text-shadow: 0 0 8px rgba(247,200,212,0.3); }
+      100% { color: #9DCFE8; text-shadow: 0 0 8px rgba(157,207,232,0.3); }
+    }
+    .marine-blink { animation: pastelFade 10s ease-in-out infinite; }
+
+    @media (min-width: 640px) {
+      .hero-body { max-width: 480px; margin: 0 auto; width: 100%; }
+      .page-inner { max-width: 480px; margin: 0 auto; width: 100%; }
+      .map-wrap iframe { height: 280px; }
+    }
+  </style>
 </head>
 <body>
-  <header><h1>ばすてる四葉</h1></header>
-  <main><p>JBC株式会社が運営する地域密着型通所介護施設のランディングページです。 | 項目 | 内容 |</p></main>
+
+<nav class="dots" id="dots">
+  <button class="dot active" data-page="0" aria-label="ページ1"></button>
+  <button class="dot" data-page="1" aria-label="ページ2"></button>
+  <button class="dot" data-page="2" aria-label="ページ3"></button>
+  <button class="dot" data-page="3" aria-label="ページ4"></button>
+</nav>
+
+<div class="swipe-wrap" id="swipeWrap">
+
+  <!-- PAGE 1: ヒーロー -->
+  <section class="page" id="page1">
+    <div class="hero-header">
+      <div class="logo-text"><span class="marine-blink">ぱすてる</span><br><span style="color:var(--text);">デイサービス四葉</span></div>
+      <a href="tel:0369042145" class="header-tel">📞 今すぐ電話</a>
+    </div>
+    <div class="hero-body">
+      <div class="hero-content">
+        <span class="tag">板橋区四葉・地域密着型通所介護</span>
+        <h1 class="gold-blink">地域に根ざした<br><em>少人数ケア</em></h1>
+        <p>「一人ひとりに寄り添うケアをお届けしたい」<br>板橋区四葉の家庭的なデイサービス。<br>ケアマネ様のご相談もお電話・FAXでスムーズに。</p>
+        <div class="hero-btns" style="grid-template-columns:1fr;">
+          <a href="tel:0369042145" class="btn btn-tel" style="flex-direction:column;gap:2px;line-height:1.4;">
+            <span>📞 お電話で相談</span>
+            <span style="color:#1a1a1a;font-size:0.95em;font-weight:700;">03-6904-2145</span>
+          </a>
+        </div>
+        <div style="margin-top:10px;background:#FFF9F5;border:1.5px solid var(--peach);border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2" style="flex-shrink:0;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span style="font-size:0.78rem;color:#aaa;font-weight:700;white-space:nowrap;">FAXでのご相談</span>
+          <span style="font-size:0.95rem;font-weight:900;color:var(--orange);white-space:nowrap;">03-6904-2146</span>
+        </div>
+      </div>
+      <img src="hero.png" alt="スタッフと利用者様の笑顔" class="hero-image">
+    </div>
+    <div class="swipe-hint">
+      <span>スワイプ</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+    </div>
+  </section>
+
+  <!-- PAGE 2: 選ばれる理由 + 料金 -->
+  <section class="page" id="page2">
+    <div class="page-inner">
+      <span class="tag orange">選ばれる理由</span>
+      <h2 class="page-title gold-blink">「ぱすてるデイサービス四葉」が<br>選ばれる3つの理由</h2>
+
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <div>
+          <h4>日中の時間を丁寧に</h4>
+          <p>1日の過ごし方にこだわり、機能訓練・レクリエーション・お食事を通じて充実した時間をご提供します。10名定員の少人数だからできる、きめ細やかなケアです。</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <div>
+          <h4>ご家族の介護負担を軽減</h4>
+          <p>日中お預かりすることで、ご家族が安心して仕事や休息に専念できるようサポートします。「今日も安心して任せられる」そんな場所でありたいと思っています。</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <div>
+          <h4>ドア・トゥ・ドアの送迎</h4>
+          <p>ご自宅まで責任をもってお迎え・お送り。移動の不安なく、毎日安心してご利用いただけます。</p>
+        </div>
+      </div>
+
+      <div style="height:1px;background:var(--peach);margin:20px 0;"></div>
+      <span class="tag">料金</span>
+      <h3 class="gold-blink" style="font-size:1.1rem;font-weight:900;margin:10px 0 14px;">介護保険適用でご負担を軽減</h3>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="price-card">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+            デイサービス
+          </h3>
+          <div class="price-main" style="font-size:1.4rem;">介護保険<small>適用</small></div>
+          <p class="price-note">1割〜3割負担<br>要介護度により異なります</p>
+        </div>
+        <div class="price-card">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg>
+            お食事代
+          </h3>
+          <div class="meal-row"><span>朝食</span><strong>提供なし</strong></div>
+          <div class="meal-row"><span>昼食</span><strong>400円</strong></div>
+          <div class="meal-row"><span>夕食</span><strong>490円</strong></div>
+          <p class="price-note" style="margin-top:8px;">実費負担分のみ</p>
+        </div>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <span>スワイプ</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+    </div>
+  </section>
+
+  <!-- PAGE 3: FAQ + お問い合わせ -->
+  <section class="page" id="page3">
+    <div class="page-inner">
+      <span class="tag orange">よくある質問</span>
+      <h2 class="page-title gold-blink">はじめての方から<br>よくあるご質問</h2>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><span class="faq-q-icon">Q</span><span>送迎はありますか？</span></div>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">はい、ご自宅までの送迎に対応しております。お気軽にご相談ください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><span class="faq-q-icon">Q</span><span>食事の提供はありますか？</span></div>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">昼食（400円）・夕食（490円）をご提供しております。朝食の提供は現在行っておりません。食形態（きざみ・とろみ等）のご要望にも対応できますので、お申し付けください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text"><span class="faq-q-icon">Q</span><span>急ぎの時は電話してもいいですか？</span></div>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">はい、もちろんです。お急ぎの場合やFAXが難しい場合は、お気軽に 03-6904-2145 までお電話ください。</div>
+      </div>
+
+      <div style="height:1px;background:var(--peach);margin:16px 0;"></div>
+      <span class="tag green">お問い合わせ</span>
+      <p style="font-size:0.78rem;color:#999;margin:10px 0 12px;">介助優先のため、<strong style="color:var(--orange)">FAXまたはお電話</strong>でご連絡いただけると大変助かります。</p>
+
+      <div class="contact-card fax-card">
+        <div class="contact-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </div>
+        <div>
+          <span class="label">Priority 1</span>
+          <h4>FAX: 03-6904-2146</h4>
+          <p>指示書・情報提供書の送付に。</p>
+        </div>
+      </div>
+      <a href="tel:0369042145" class="contact-card tel-card" style="margin-top:8px;">
+        <div class="contact-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div>
+          <span class="label">Priority 2</span>
+          <h4>TEL: 03-6904-2145</h4>
+          <p>お急ぎ・FAXが難しい場合に。</p>
+        </div>
+      </a>
+    </div>
+    <div class="swipe-hint">
+      <span>スワイプ</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+    </div>
+  </section>
+
+  <!-- PAGE 4: アクセス -->
+  <section class="page" id="page4">
+    <div class="page-inner">
+      <span class="tag orange">アクセス</span>
+      <h2 class="page-title gold-blink">施設へのアクセス</h2>
+
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps?q=東京都板橋区四葉2-15-1&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="access-info">
+        <dl>
+          <dt>住所</dt>
+          <dd>〒175-0084 東京都板橋区四葉2-15-1 1階</dd>
+          <dt>電話</dt>
+          <dd>03-6904-2145</dd>
+          <dt>FAX</dt>
+          <dd>03-6904-2146</dd>
+          <dt>受付</dt>
+          <dd>8:00〜17:00（月〜日）</dd>
+        </dl>
+      </div>
+
+      <a href="tel:0369042145" class="btn btn-orange" style="width:100%;margin-top:20px;">
+        📞 今すぐ電話する　03-6904-2145
+      </a>
+
+      <div style="margin-top:10px;background:#FFF9F5;border:1.5px solid var(--peach);border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E67A30" stroke-width="2" style="flex-shrink:0;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span style="font-size:0.78rem;color:#aaa;font-weight:700;white-space:nowrap;">FAXでのご相談</span>
+        <span style="font-size:0.95rem;font-weight:900;color:var(--orange);white-space:nowrap;">03-6904-2146</span>
+      </div>
+
+      <p class="copyright">© 2026 ぱすてるデイサービス四葉. All rights reserved.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const wrap = document.getElementById('swipeWrap');
+  const pages = document.querySelectorAll('.page');
+  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  function goTo(index) {
+    if (index < 0 || index >= pages.length) return;
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex = index;
+    wrap.scrollTo({ left: index * wrap.clientWidth, behavior: 'smooth' });
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    setTimeout(() => { isAnimating = false; }, 600);
+  }
+
+  function updateDots() {
+    const index = Math.round(wrap.scrollLeft / wrap.clientWidth);
+    currentIndex = index;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+  wrap.addEventListener('scroll', updateDots, { passive: true });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => goTo(parseInt(dot.dataset.page)));
+  });
+
+  let touchStartX = 0, touchStartY = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      goTo(dx < 0 ? currentIndex + 1 : currentIndex - 1);
+    }
+  }, { passive: true });
+
+  wrap.addEventListener('wheel', e => {
+    e.preventDefault();
+    const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+    if (delta > 30) goTo(currentIndex + 1);
+    else if (delta < -30) goTo(currentIndex - 1);
+  }, { passive: false });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(currentIndex + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(currentIndex - 1);
+  });
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
 </body>
 </html>
