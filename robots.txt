@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jbc-care.github.io/yotsuba/sitemap.xml
